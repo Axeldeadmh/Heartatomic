@@ -59,17 +59,17 @@
 <script>
     // ✏️ PEGA AQUÍ LA LETRA DE "CORAZÓN ATÓMICO"
     const cancion = [
-        dime si me estoy volviendo loco,
-        dime por favor si a ti te pasa igual :3,
-        mi corazon atomico,
-        en cuenta regresiva esta,
-        Parece que perdi el control,
-        a mi ya no, ya no me importa nada,
-        acaricia mi alma,
-        suavisa mi ser,
-        esteriliza mi sangre,
-        y purifica mi amor,
-        💗
+        "Dime si me estoy volviendo loco,"
+        "Dime por favor si a ti te pasa igual :3,"
+        "Mi corazon atomico,"
+        "En cuenta regresiva esta,"
+        "Parece que perdi el control,"
+        "A mi ya no, ya no me importa nada,"
+        "Acaricia mi alma,"
+        "Suavisa mi ser,"
+        "Esteriliza mi sangre,"
+        "Y purifica mi amor,"
+        "💗"
     ];
 
     let indice = 0;
