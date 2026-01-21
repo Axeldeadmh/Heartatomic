@@ -1,81 +1,83 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Corazón Atómico</title>
+<meta charset="UTF-8">
+<title>Corazón Atómico</title>
 
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: radial-gradient(circle at top, #2a001a, #12000b);
-            font-family: Arial, sans-serif;
-        }
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: radial-gradient(circle at top, #2a001a, #12000b);
+        font-family: Arial, sans-serif;
+    }
 
-        .container {
-            background-color: #1a0010;
-            border: 2px solid #DA0886;
-            border-radius: 18px;
-            padding: 30px;
-            width: 90%;
-            max-width: 520px;
-            text-align: center;
-            box-shadow: 0 0 30px rgba(218, 8, 134, 0.7);
-            animation: latido 2s infinite;
-        }
+    .container {
+        background-color: #1a0010;
+        border: 2px solid #DA0886;
+        border-radius: 20px;
+        padding: 32px;
+        width: 90%;
+        max-width: 520px;
+        text-align: center;
+        box-shadow: 0 0 25px rgba(218, 8, 134, 0.6);
+        animation: latido 2.5s infinite;
+    }
 
-        @keyframes latido {
-            0%   { box-shadow: 0 0 20px rgba(218, 8, 134, 0.4); }
-            50%  { box-shadow: 0 0 40px rgba(218, 8, 134, 0.9); }
-            100% { box-shadow: 0 0 20px rgba(218, 8, 134, 0.4); }
-        }
+    @keyframes latido {
+        0%   { box-shadow: 0 0 20px rgba(218, 8, 134, 0.4); }
+        50%  { box-shadow: 0 0 45px rgba(218, 8, 134, 0.9); }
+        100% { box-shadow: 0 0 20px rgba(218, 8, 134, 0.4); }
+    }
 
-        h1 {
-            color: #DA0886;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-        }
+    h1 {
+        color: #DA0886;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+    }
 
-        #texto {
-            color: #ffe6f2;
-            font-size: 1.25em;
-            min-height: 120px;
-            margin-bottom: 25px;
-            white-space: pre-wrap;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
+    #texto {
+        color: #ffe6f2;
+        font-size: 1.25em;
+        min-height: 120px;
+        margin-bottom: 28px;
+        white-space: pre-wrap;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
 
-        #texto.visible {
-            opacity: 1;
-        }
+    #texto.mostrar {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-        button {
-            background-color: #DA0886;
-            color: #fff;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-size: 1em;
-            cursor: pointer;
-            box-shadow: 0 0 12px rgba(218, 8, 134, 0.8);
-            transition: transform 0.2s, background-color 0.3s;
-        }
+    button {
+        background-color: #DA0886;
+        color: white;
+        border: none;
+        padding: 12px 32px;
+        border-radius: 30px;
+        font-size: 1em;
+        cursor: pointer;
+        box-shadow: 0 0 12px rgba(218, 8, 134, 0.7);
+        transition: transform 0.2s, background-color 0.3s;
+    }
 
-        button:hover {
-            background-color: #ff2fa2;
-            transform: scale(1.05);
-        }
+    button:hover {
+        background-color: #ff2fa2;
+        transform: scale(1.05);
+    }
 
-        button:disabled {
-            background-color: #6a003f;
-            cursor: default;
-            box-shadow: none;
-        }
-    </style>
+    button:disabled {
+        background-color: #6a003f;
+        cursor: default;
+        box-shadow: none;
+    }
+</style>
 </head>
 
 <body>
@@ -83,7 +85,7 @@
 <div class="container">
     <h1>Corazón Atómico</h1>
     <div id="texto"></div>
-    <button id="boton" onclick="siguienteParte()">Siguiente</button>
+    <button id="boton">Siguiente</button>
 </div>
 
 <script>
@@ -105,31 +107,31 @@
     const texto = document.getElementById("texto");
     const boton = document.getElementById("boton");
 
-    function siguienteParte() {
-        texto.classList.remove("visible");
-
-        setTimeout(() => {
-            if (indice < cancion.length) {
-                texto.textContent = cancion[indice];
-                indice++;
-
-                if (indice === cancion.length) {
-                    boton.textContent = "Fin";
-                }
-            } else {
-                texto.textContent = "🎶 Corazón Atómico – Zoé (te amo :3) 🎶";
-                boton.disabled = true;
-            }
-
-            texto.classList.add("visible");
-        }, 300);
+    function mostrarTexto(contenido) {
+        texto.classList.remove("mostrar");
+        void texto.offsetWidth; // fuerza reflow (clave)
+        texto.textContent = contenido;
+        texto.classList.add("mostrar");
     }
 
-    // Mostrar la primera parte
-    siguienteParte();
+    boton.addEventListener("click", () => {
+        if (indice < cancion.length) {
+            mostrarTexto(cancion[indice]);
+            indice++;
+
+            if (indice === cancion.length) {
+                boton.textContent = "Fin";
+            }
+        } else {
+            mostrarTexto("🎶 Corazón Atómico – Zoé (te amo :3) 🎶");
+            boton.disabled = true;
+        }
+    });
+
+    // Primera línea al cargar
+    mostrarTexto(cancion[indice]);
+    indice++;
 </script>
 
 </body>
 </html>
-
-
