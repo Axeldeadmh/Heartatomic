@@ -3,88 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <title>Corazón Atómico</title>
+
     <style>
         body {
-            background-color: #12000b;
-            color: #ffe6f2;
-            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            background: radial-gradient(circle at top, #2a001a, #12000b);
+            font-family: Arial, sans-serif;
         }
 
         .container {
             background-color: #1a0010;
             border: 2px solid #DA0886;
-            border-radius: 15px;
+            border-radius: 18px;
             padding: 30px;
             width: 90%;
             max-width: 520px;
             text-align: center;
-            box-shadow: 0 0 25px rgba(218, 8, 134, 0.5);
+            box-shadow: 0 0 30px rgba(218, 8, 134, 0.7);
+            animation: latido 2s infinite;
+        }
+
+        @keyframes latido {
+            0%   { box-shadow: 0 0 20px rgba(218, 8, 134, 0.4); }
+            50%  { box-shadow: 0 0 40px rgba(218, 8, 134, 0.9); }
+            100% { box-shadow: 0 0 20px rgba(218, 8, 134, 0.4); }
+        }
+
+        h1 {
+            color: #DA0886;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
         }
 
         #texto {
-            font-size: 1.2em;
+            color: #ffe6f2;
+            font-size: 1.25em;
             min-height: 120px;
             margin-bottom: 25px;
             white-space: pre-wrap;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        #texto.visible {
+            opacity: 1;
         }
 
         button {
             background-color: #DA0886;
             color: #fff;
             border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
+            padding: 12px 30px;
+            border-radius: 30px;
             font-size: 1em;
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(218, 8, 134, 0.6);
+            box-shadow: 0 0 12px rgba(218, 8, 134, 0.8);
+            transition: transform 0.2s, background-color 0.3s;
         }
 
         button:hover {
             background-color: #ff2fa2;
+            transform: scale(1.05);
+        }
+
+        button:disabled {
+            background-color: #6a003f;
+            cursor: default;
+            box-shadow: none;
         }
     </style>
 </head>
+
 <body>
 
 <div class="container">
+    <h1>Corazón Atómico</h1>
     <div id="texto"></div>
-    <button onclick="siguienteParte()">Siguiente</button>
+    <button id="boton" onclick="siguienteParte()">Siguiente</button>
 </div>
 
 <script>
+    // ✏️ EDITA AQUÍ LA CANCIÓN
     const cancion = [
-        "Dime si me estoy volviendo loco",
-        "Dime por favor si a ti te pasa igual :3",
-        "Mi corazón atómico",
-        "En cuenta regresiva está",
-        "Parece que perdí el control",
-        "A mí ya no, ya no me importa nada",
-        "Acaricia mi alma",
-        "Suaviza mi ser",
-        "Esteriliza mi sangre",
-        "Y purifica mi amor",
+        "Primera parte de la canción",
+        "Segunda parte de la canción",
+        "Tercera parte de la canción",
+        "Cuarta parte de la canción",
         "💗"
     ];
 
     let indice = 0;
+    const texto = document.getElementById("texto");
+    const boton = document.getElementById("boton");
 
     function siguienteParte() {
-        if (indice < cancion.length) {
-            document.getElementById("texto").textContent = cancion[indice];
-            indice++;
-        } else {
-            document.getElementById("texto").textContent = "🎶 Fin 🎶";
-        }
+        texto.classList.remove("visible");
+
+        setTimeout(() => {
+            if (indice < cancion.length) {
+                texto.textContent = cancion[indice];
+                indice++;
+
+                if (indice === cancion.length) {
+                    boton.textContent = "Fin";
+                }
+            } else {
+                texto.textContent = "🎶 Fin 🎶";
+                boton.disabled = true;
+            }
+
+            texto.classList.add("visible");
+        }, 300);
     }
 
-    // Mostrar la primera parte al cargar
+    // Mostrar la primera parte
     siguienteParte();
 </script>
 
 </body>
 </html>
+
